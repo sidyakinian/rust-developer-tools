@@ -5,7 +5,7 @@ mod password;
 use password::generate_password;
 
 mod screenshare;
-use screenshare::{hide_files};
+use screenshare::{hide_files, show_files};
 
 use structopt::StructOpt;
 
@@ -19,8 +19,8 @@ enum Command {
     },
     #[structopt(about = "hide all files from desktop into a documents folder")]
     Hide,
-    // #[structopt(about = "put back desktop files from documents folder")]
-    // Show,
+    #[structopt(about = "put back desktop files from documents folder")]
+    Show,
 }
 
 fn main() {
@@ -34,6 +34,11 @@ fn main() {
         Command::Hide => {
             if let Err(e) = hide_files() {
                 eprintln!("Error hiding files: {}", e);
+            }
+        }
+        Command::Show => {
+            if let Err(e) = show_files() {
+                eprintln!("Error showing files: {}", e);
             }
         }
     }
