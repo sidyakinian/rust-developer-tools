@@ -35,13 +35,12 @@ pub fn show_files() -> std::io::Result<()> {
     for entry in fs::read_dir(hide_folder.clone())? {
         let entry = entry?;
         let path = entry.path();
-        if path.is_file() {
-            let dest = desktop_path.join(path.file_name().unwrap());
-            fs::rename(path, dest)?;
-        }
+        let dest = desktop_path.join(path.file_name().unwrap());
+        fs::rename(path, dest)?;
     }
 
-    // fs::remove_dir(hide_folder)?;
+    fs::remove_dir(hide_folder)?;
 
     Ok(())
 }
+    
