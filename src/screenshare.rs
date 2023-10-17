@@ -16,10 +16,11 @@ pub fn hide_files() -> std::io::Result<()> {
 
     for entry in fs::read_dir(desktop_path)? {
         let entry = entry?;
-        let path = entry.path();
-        if path.is_file() {
-            let dest = hide_folder.join(path.file_name().unwrap());
-            fs::rename(path, dest)?;
+        let entry_path = entry.path();
+        // Do not move folder if it's our own
+        if entry_path != hide_folder { 
+            let dest_path = hide_folder.join(entry_path.file_name().unwrap());
+            fs::rename(entry_path, dest_path)?;
         }
     }
 
